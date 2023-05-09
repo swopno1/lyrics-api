@@ -10,27 +10,27 @@
     {
       "src": "/songs",
       "methods": ["GET", "POST"],
-      "dest": "server.js"
+      "dest": "app.js"
     },
     {
       "src": "/songs/:id",
       "methods": ["GET", "PUT", "DELETE"],
-      "dest": "server.js"
+      "dest": "app.js"
     },
     {
       "src": "/users",
       "methods": ["GET"],
-      "dest": "server.js"
+      "dest": "app.js"
     },
     {
       "src": "/users/login",
       "methods": ["POST"],
-      "dest": "server.js"
+      "dest": "app.js"
     },
     {
       "src": "/users/signup",
       "methods": ["POST"],
-      "dest": "server.js"
+      "dest": "app.js"
     },
     {
       "src": "/users/update/:id",
