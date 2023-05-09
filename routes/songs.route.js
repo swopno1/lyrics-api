@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   const songCollection = await getDbCollection("songs");
   const songs = await songCollection.find(query).toArray();
 
-  await res.status(200).send(songs);
+  await res.status(200).json(songs);
 });
 
 // GET /songs/:id - Retrieve a specific song by ID
@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   if (!song) {
     return res.status(404).send("Song not found");
   }
-  res.status(200).send(song);
+  res.status(200).json(song);
 });
 
 // POST /songs - Add a new song
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
   if (result.acknowledged && result.insertedId) {
     // const insertedSong = await songsCollection.findOne({_id: result.insertedId});
-    res.status(201).send(newSong);
+    res.status(201).json(newSong);
   } else {
     res
       .status(500)
@@ -56,7 +56,7 @@ router.put("/:id", async (req, res) => {
   if (!updatedSong) {
     return res.status(404).send("Song not found");
   }
-  res.status(200).send(updatedSong);
+  res.status(200).json(updatedSong);
 });
 
 // DELETE /songs/:id - Delete a specific song by ID
