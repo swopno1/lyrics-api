@@ -1,5 +1,19 @@
-// const mainData = mongoClient.db("apidata").collection("main");
-// const usersData = mongoClient.db("apidata").collection("users");
+const express = require("express");
+const router = express.Router();
+const { ObjectId } = require("mongodb");
+
+const getDbCollection = require("../utils/db");
+
+router.get("/", async (req, res) => {
+  try {
+    const usersCollection = await getDbCollection("users");
+    const users = await usersCollection.find().toArray();
+    await res.status(200).send(users);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Error retrieving users from database");
+  }
+});
 
 // app.post("/login", (req, res) => {
 //     const { username, password } = req.body;
@@ -10,17 +24,6 @@
 //     } else {
 //       res.status(401).json({ message: "Incorrect username or password" });
 //     }
-//   });
-
-//   app.get("/users", (req, res) => {
-//     const query = {};
-//     const users = usersData.find(query).toArray((err, doc) => {
-//       if (err) {
-//         console.error(err);
-//         return res.status(500).send("Error retrieving users from database");
-//       }
-//       res.status(200).send(docs);
-//     });
 //   });
 
 //   app.post("/users", (req, res) => {
@@ -35,3 +38,5 @@
 //       res.send(result.ops[0]);
 //     });
 //   });
+
+module.exports = router;

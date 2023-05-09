@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 
 const getDbCollection = require("./utils/db");
@@ -11,7 +10,27 @@ const port = process.env.PORT || 4001;
 
 // middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Parse JSON request bodies
+
+// Routes
+const rootRouter = require("./routes/root.route");
+const songRouter = require("./routes/songs.route");
+const userRouter = require("./routes/users.route");
+app.use("/songs", songRouter);
+app.use("/users", userRouter);
+app.use("/", rootRouter);
+
+getDbCollection("songs")
+  .then((songsCollection) => {
+    // Start the server once the database connection is established
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error connecting to database:", err);
+    process.exit(1);
+  });
 
 const verifyJWT = (req, res, next) => {
   const token =
@@ -29,32 +48,3 @@ const verifyJWT = (req, res, next) => {
     res.status(401).json({ message: "Missing token" });
   }
 };
-
-const mongoClient = new MongoClient(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1,
-});
-
-mongoClient.connect((err, client) => {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  }
-
-  const db = mongoClient.db();
-
-  app.use(express.json()); // Parse JSON request bodies
-
-  // Routes
-  const songRouter = require("./routes/songs.route");
-  app.use("/songs", songRouter);
-});
-
-app.get("/", (req, res) => {
-  res.send("Lyrics API");
-});
-
-app.listen(port, () => {
-  console.log(`Lyrics API listening on port ${port}`);
-});
