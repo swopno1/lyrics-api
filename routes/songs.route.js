@@ -45,6 +45,43 @@ router.post("/", async (req, res) => {
   }
 });
 
+// POST /songs/bulk - Add many songs at once
+// Validate bulk song
+const validateBulkSong = (req, res, next) => {
+  const newSongs = req.body;
+
+  if (!Array.isArray(newSongs) || newSongs.length === 0) {
+    return res.status(400).json({
+      message: "Invalid data format",
+    });
+  }
+
+  for (let i = 0; i < newSongs.length; i++) {
+    const song = newSongs[i];
+    if (!song.title && !song.lyrics) {
+      return res.status(400).json({
+        message: `Missing title or lyrics property in song ${i}`,
+      });
+    }
+  }
+
+  next();
+};
+// Making bulk post request
+router.post("/bulk", validateBulkSong, async (req, res) => {
+  try {
+    const newSongs = req.body;
+
+    const songCollection = await getDbCollection("songs");
+    const result = await songCollection.insertMany(newSongs);
+    const numInserted = result.insertedCount;
+    return res.status(201).send(`Successfully inserted ${numInserted} songs`);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Internal server error");
+  }
+});
+
 // PUT /songs/:id - Update a specific song by ID
 router.put("/:id", async (req, res) => {
   const songCollection = await getDbCollection("songs");
