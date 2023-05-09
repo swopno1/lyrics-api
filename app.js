@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
 
+const getDbCollection = require("./utils/db");
+
 const app = express();
 const port = process.env.PORT || 4001;
 
@@ -28,71 +30,26 @@ const verifyJWT = (req, res, next) => {
   }
 };
 
-const client = new MongoClient(process.env.MONGODB_URI, {
+const mongoClient = new MongoClient(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
 
-const run = async () => {
-  try {
-    await client.connect((err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("Connected to MongoDB");
-      }
-    });
-
-    const mainData = client.db("apidata").collection("main");
-    const usersData = client.db("apidata").collection("users");
-
-    app.post("/login", async (req, res) => {
-      const { username, password } = req.body;
-
-      if (username === "my_username" && password === "my_secret_password") {
-        const token = jwt.sign({ username }, process.env.JWT_SECRET);
-        res.send({ token });
-      } else {
-        res.status(401).json({ message: "Incorrect username or password" });
-      }
-    });
-
-    app.get("/users", async (req, res) => {
-      const query = {};
-      const cursor = usersData.find(query);
-      const users = await cursor.toArray();
-
-      res.send(users);
-    });
-
-    app.post("/users", async (req, res) => {
-      const newUser = req.body;
-
-      const result = await usersData.insertOne(newUser);
-      res.send(result);
-    });
-
-    app.get("/alldata", async (req, res) => {
-      const query = {};
-      const allData = await mainData.find(query).toArray();
-
-      await res.status(200).json({ status: "success", data: allData });
-    });
-
-    app.get("/songdata/:id", async (req, res) => {
-      const songData = await mainData.findOne({
-        _id: new ObjectId(req.params.id),
-      });
-
-      await res.status(200).json({ status: "success", data: songData });
-    });
-  } finally {
-    console.log("Request completed");
+mongoClient.connect((err, client) => {
+  if (err) {
+    console.log(err);
+    process.exit(1);
   }
-};
 
-run().catch(console.dir);
+  const db = mongoClient.db();
+
+  app.use(express.json()); // Parse JSON request bodies
+
+  // Routes
+  const songRouter = require("./routes/songs.route");
+  app.use("/songs", songRouter);
+});
 
 app.get("/", (req, res) => {
   res.send("Lyrics API");
