@@ -41,6 +41,10 @@
       "src": "/users/update/:id",
       "methods": ["PUT"],
       "dest": "app.js"
+    },
+    {
+      "src": "/api-docs",
+      "dest": "swagger.js"
     }
   ]
 }
