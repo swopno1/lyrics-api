@@ -8,6 +8,11 @@
   ],
   "routes": [
     {
+      "src": "/",
+      "methods": ["GET"],
+      "dest": "app.js"
+    },
+    {
       "src": "/songs",
       "methods": ["GET", "POST"],
       "dest": "app.js"
@@ -35,7 +40,7 @@
     {
       "src": "/users/update/:id",
       "methods": ["PUT"],
-      "dest": "server.js"
+      "dest": "app.js"
     }
   ]
 }
