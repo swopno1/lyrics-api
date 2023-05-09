@@ -48,3 +48,9 @@ const verifyJWT = (req, res, next) => {
     res.status(401).json({ message: "Missing token" });
   }
 };
+
+// Add the Swagger UI middleware
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json"); // Import the Swagger document
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

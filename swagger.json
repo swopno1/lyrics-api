@@ -1,0 +1,57 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Lyrics API",
+    "version": "1.0.0",
+    "description": "API for retrieving song lyrics"
+  },
+  "servers": [
+    {
+      "url": "https://lyrics-api-orpin.vercel.app"
+    }
+  ],
+  "paths": {
+    "/songs": {
+      "get": {
+        "summary": "Retrieve all songs",
+        "description": "Returns a list of all songs in the database",
+        "responses": {
+          "200": {
+            "description": "A list of songs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Song"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Song": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the song"
+          },
+          "artist": {
+            "type": "string",
+            "description": "The name of the artist"
+          },
+          "lyrics": {
+            "type": "string",
+            "description": "The lyrics of the song"
+          }
+        }
+      }
+    }
+  }
+}

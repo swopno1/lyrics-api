@@ -43,8 +43,8 @@
       "dest": "app.js"
     },
     {
-      "src": "/api-docs",
-      "dest": "swagger.js"
+      "src": "/docs",
+      "dest": "app.js"
     }
   ]
 }
