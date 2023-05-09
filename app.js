@@ -54,5 +54,5 @@ const router = express.Router();
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json"); // Import the Swagger document
 
-router.use("/docs", swaggerUi.serve);
-router.get("/docs", swaggerUi.setup(swaggerDocument));
+app.use("/docs", swaggerUi.serve);
+app.get("/docs", swaggerUi.setup(swaggerDocument));
