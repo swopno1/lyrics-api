@@ -34,6 +34,11 @@
       "dest": "app.js"
     },
     {
+      "src": "/songs/bulk",
+      "methods": ["POST"],
+      "dest": "app.js"
+    },
+    {
       "src": "/users",
       "methods": ["GET"],
       "dest": "app.js"
