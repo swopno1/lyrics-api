@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/songs",
+      "methods": ["GET", "POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/songs/:id",
+      "methods": ["GET", "PUT", "DELETE"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/users",
+      "methods": ["GET"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/users/login",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/users/signup",
+      "methods": ["POST"],
+      "dest": "server.js"
+    },
+    {
+      "src": "/users/update/:id",
+      "methods": ["PUT"],
+      "dest": "server.js"
+    }
+  ]
+}
