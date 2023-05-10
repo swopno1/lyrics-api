@@ -16,8 +16,10 @@ app.use(express.json()); // Parse JSON request bodies
 const rootRouter = require("./routes/root.route");
 const songRouter = require("./routes/songs.route");
 const userRouter = require("./routes/users.route");
+const searchRouter = require("./routes/search.route");
 app.use("/songs", songRouter);
 app.use("/users", userRouter);
+app.use("/search", searchRouter);
 app.use("/", rootRouter);
 
 getDbCollection("songs")
