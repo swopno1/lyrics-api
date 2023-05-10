@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   if (!song) {
     return res.status(404).send("Song not found");
   }
-  res.status(200).json(song);
+  await res.status(200).json(song);
 });
 
 // POST /songs - Add a new song
