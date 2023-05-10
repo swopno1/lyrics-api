@@ -16,14 +16,6 @@
       "dest": "app.js"
     },
     {
-      "src": "/docs",
-      "dest": "/public/index.html"
-    },
-    {
-      "src": "/swagger.json",
-      "dest": "/public/swagger.json"
-    },
-    {
       "src": "/songs",
       "methods": ["GET", "POST"],
       "dest": "app.js"
@@ -57,6 +49,14 @@
       "src": "/users/update/:id",
       "methods": ["PUT"],
       "dest": "app.js"
+    },
+    {
+      "src": "/docs",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/swagger.json",
+      "dest": "/public/swagger.json"
     }
   ]
 }
