@@ -52,7 +52,7 @@
     },
     {
       "src": "/docs",
-      "dest": "/public/index.html"
+      "dest": "docs.js"
     },
     {
       "src": "/swagger.json",
