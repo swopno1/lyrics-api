@@ -6,57 +6,16 @@
       "use": "@vercel/node"
     }
   ],
-  "env": {
-    "SWAGGER_HOST": "https://lyrics-api-orpin.vercel.app"
-  },
 
   "routes": [
+    { "src": "/(.*)", "dest": "/app.js" },
+    { "src": "/songs/([^/]+)", "dest": "/songs" },
+    { "src": "/songs/([^/]+)/?", "dest": "/songs/:1" },
+    { "src": "/users/([^/]+)", "dest": "/users" },
+    { "src": "/users/([^/]+)/?", "dest": "/users/:1" },
     {
-      "src": "/",
-      "dest": "app.js"
-    },
-    {
-      "src": "/songs",
-      "methods": ["GET", "POST"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/songs/:id",
-      "methods": ["GET", "PUT", "DELETE"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/songs/bulk",
-      "methods": ["POST"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/users",
-      "methods": ["GET"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/users/login",
-      "methods": ["POST"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/users/signup",
-      "methods": ["POST"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/users/update/:id",
-      "methods": ["PUT"],
-      "dest": "app.js"
-    },
-    {
-      "src": "/docs",
+      "src": "/docs/(.*)",
       "dest": "docs.js"
-    },
-    {
-      "src": "/swagger.json",
-      "dest": "/public/swagger.json"
     }
   ]
 }
